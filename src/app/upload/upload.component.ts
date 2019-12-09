@@ -40,8 +40,8 @@ export class UploadComponent implements OnInit {
     try {
       this.errorMessage = null;
       const randomPrefix: string = ('000'+Math.round(Math.random()*10000)).slice(-4);
-      this.encryptionPassword = this.encryptionService.generatePassword();
-      this.fileName = this.encryptionService.generateFileName();
+      this.encryptionPassword = this.encryptionPassword && this.encryptionPassword.length > 12 ? this.encryptionPassword : this.encryptionService.generatePassword();
+      this.fileName = this.fileName && this.fileName.length ? this.fileName : this.encryptionService.generateFileName();
       this.encryptedContent = '{ "type": "' + this.contentType + '", "data": "' + this.encryptionService.encrypt(this.contentText, this.encryptionPassword) + '" }';
       this.dataURI = this.sanitizer.bypassSecurityTrustResourceUrl('data:text/plain;charset=utf-8,' +     encodeURIComponent(this.encryptedContent));
       this.applicationOrigin = window.location.origin;
