@@ -9,6 +9,7 @@ export class EncryptionService {
   constructor() { }
 
   public encrypt(cleartextString: string, passphrase: string): string {
+    cleartextString = encodeURIComponent(cleartextString);
     const cleartext: Uint8Array = new Uint8Array(string_to_bytes(cleartextString));
     const salt: Uint8Array = crypto.getRandomValues(new Uint8Array(16));
     const key: Uint8Array = Pbkdf2HmacSha256(
@@ -39,7 +40,7 @@ export class EncryptionService {
         32
       );
     const cleartext: Uint8Array = AES_GCM.decrypt(encrypted, key, nonce);
-    return bytes_to_string(cleartext);
+    return decodeURIComponent(bytes_to_string(cleartext));
   }
 
   public toServerFileName(fileName: string) {

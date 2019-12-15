@@ -49,6 +49,7 @@ export class UploadComponent implements OnInit {
       this.applicationOrigin = window.location.origin;
       this.isDownload = true;
     } catch (e) {
+      console.log(e);
       this.errorMessage = 'There was an error during encryption. Please make sure you are using a modern browser like Google Chrome, Firefox or Chromium.';
     }
   }
