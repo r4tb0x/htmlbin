@@ -37,7 +37,7 @@
           <div class="col-12"><small>Filename and password are optional fields. If left empty, or if the password is shorter than 12 characters, a value will be generated automatically. Use manually set filename and password for readable links.</small></div>
         </div>
       </div>
-      <div class="col-12">
+      <div class="col-12 mt-3">
           <textarea class="d-block w-100 text-dark bg-light form-control" style="height: 40vh;" name="contentText" [(ngModel)]="contentText" placeholder="content"></textarea>
       </div>
     </div>
@@ -47,7 +47,7 @@
     <p class="text-center">
       <a disabled class="btn btn-outline-success my-2 my-sm-0" type="button" [href]="dataURI" target="_blank" download>Download</a>
     </p>
-    <p>Please download the encrypted file, name it "{{fileName}}.json" and upload it into the uploads directory.</p>
+    <p>Please download the encrypted file, name it "{{serverFileName}}.json" and upload it into the uploads directory.</p>
     <p>You can then open the file using the following link:</p>
     <p>
       <span class="d-block form-control text-dark bg-light w-100">{{applicationOrigin}}/htmlbin/#/view/{{fileName}}/{{encryptionPassword}}</span>

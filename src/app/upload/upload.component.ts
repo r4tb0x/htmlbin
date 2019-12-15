@@ -16,6 +16,7 @@ export class UploadComponent implements OnInit {
   //fullFileKey: string = '';
   encryptionPassword: string = '';
   fileName: string = '';
+  serverFileName: string = '';
   encryptedContent: string = '';
   isDownload: boolean = false;
   dataURI: SafeResourceUrl = null;
@@ -42,6 +43,7 @@ export class UploadComponent implements OnInit {
       const randomPrefix: string = ('000'+Math.round(Math.random()*10000)).slice(-4);
       this.encryptionPassword = this.encryptionPassword && this.encryptionPassword.length > 12 ? this.encryptionPassword : this.encryptionService.generatePassword();
       this.fileName = this.fileName && this.fileName.length ? this.fileName : this.encryptionService.generateFileName();
+      this.serverFileName = this.encryptionService.toServerFileName(this.fileName);
       this.encryptedContent = '{ "type": "' + this.contentType + '", "data": "' + this.encryptionService.encrypt(this.contentText, this.encryptionPassword) + '" }';
       this.dataURI = this.sanitizer.bypassSecurityTrustResourceUrl('data:text/plain;charset=utf-8,' +     encodeURIComponent(this.encryptedContent));
       this.applicationOrigin = window.location.origin;

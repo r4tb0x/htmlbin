@@ -12,6 +12,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 export class ViewerComponent implements OnInit, OnDestroy {
 
   fileName: string = '';
+  serverFileName: string = '';
   password: string = '';
   decryptedText: string = '';
   fileType: string = '';
@@ -33,7 +34,7 @@ export class ViewerComponent implements OnInit, OnDestroy {
       if (!this.fileName || this.fileName.length <= 0 || !this.password || this.password.length <= 0) {
         this.errorMessage = 'Sorry, something went wrong here! Possible reason: broken link.';
       } else {
-        this.http.get(this.siteUrl+'uploads/'+this.fileName+'.json?nocache='+(new Date().getTime())).subscribe((answer: any) => {
+        this.http.get(this.siteUrl+'uploads/'+this.encryptionService.toServerFileName(this.fileName)+'.json?nocache='+(new Date().getTime())).subscribe((answer: any) => {
           if (answer && answer.type && answer.data) {
             try {
               this.decryptedText = this.encryptionService.decrypt(answer.data, this.password);
