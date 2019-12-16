@@ -26,9 +26,14 @@
             "styles": [
               "src/styles.css",
 	            "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/assets/themes/bootswatch-theme-cyborg.css"
+              "src/assets/themes/bootswatch-theme-cyborg.css",
+              "src/assets/styles/featherlight.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/scripts/jquery-3.4.1.min.js",
+              "src/assets/scripts/featherlight.min.js",
+              "src/assets/scripts/document-toc.js"
+            ]
           },
           "configurations": {
             "production": {

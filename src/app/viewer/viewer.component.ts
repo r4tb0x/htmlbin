@@ -20,6 +20,7 @@ export class ViewerComponent implements OnInit, OnDestroy {
   errorMessage: string = null;
   isLoading: boolean = true;
   siteUrl: string = '';
+  showFirst: string = '';
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private sanitizer: DomSanitizer, private encryptionService: EncryptionService) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
@@ -29,8 +30,20 @@ export class ViewerComponent implements OnInit, OnDestroy {
     this.siteUrl = window.location.origin + '/';
     this.errorMessage = null;
     this.route.paramMap.subscribe(params => {
-      this.fileName = params.get('fileName') && params.get('fileName').length ? params.get('fileName').trim() : '';
-      this.password = params.get('password') && params.get('password').length ? params.get('password').trim() : '';
+      const paramfileName: string = params.get('fileName') && params.get('fileName').length ? params.get('fileName').trim() : '';
+      const parampassword: string = params.get('password') && params.get('password').length ? params.get('password').trim() : '';
+      const paramshowFirst: string = params.get('showFirst') && params.get('showFirst').length ? '.showDocument #'+params.get('showFirst').trim() : '.showDocument h1';
+
+      if (paramfileName === this.fileName && parampassword === this.password && this.decryptedText && this.decryptedText.length > 0) {
+        this.showFirst = paramshowFirst;
+        window['showNewAnchor'](this.showFirst);
+        return;
+      }
+
+      this.fileName = paramfileName;
+      this.password = parampassword;
+      this.showFirst = paramshowFirst;
+
       if (!this.fileName || this.fileName.length <= 0 || !this.password || this.password.length <= 0) {
         this.errorMessage = 'Sorry, something went wrong here! Possible reason: broken link.';
       } else {
@@ -43,6 +56,12 @@ export class ViewerComponent implements OnInit, OnDestroy {
               }
               this.isLoading = false;
               this.fileType = answer.type;
+              const showFirst: string = this.showFirst;
+              setTimeout(function(){
+                if (typeof window['addDocumentTOC'] === 'function') {
+                  window['addDocumentTOC'](showFirst);
+                }
+              }, 100);
             } catch (e) {
               this.isLoading = false;
               this.errorMessage = 'Sorry, something went wrong here! Possible reason: broken link.';

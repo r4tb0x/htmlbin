@@ -53,11 +53,13 @@ export class EncryptionService {
   public generateFileName(): string {
     return bytes_to_hex(crypto.getRandomValues(new Uint8Array(8)));
   }
+
   public generatePassword(): string {
     let b64: string = bytes_to_base64(crypto.getRandomValues(new Uint8Array(32)));
     b64 = b64.replace(/\//g, '-');
-    b64 = b64.replace(/\=/g, '_');
-    return b64;
+    b64 = b64.replace(/\=/g, '-');
+    b64 = b64.replace(/\+/g, '-');
+    return encodeURIComponent(b64);
   }
 
   public toBase64(utf8string: string | Uint8Array): string {

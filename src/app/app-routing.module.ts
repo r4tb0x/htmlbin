@@ -8,6 +8,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 const routes: Routes = [
   {path: 'view/:fileName/:password', component: ViewerComponent},
+  {path: 'view/:fileName/:password/:showFirst', component: ViewerComponent},
   {path: 'upload', component: UploadComponent},
   {path: '', component: StartComponent}
 ];
