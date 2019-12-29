@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { StartComponent } from './start/start.component';
-import { ViewerComponent } from './viewer/viewer.component';
+import { SafeHtmlPipe, ViewerComponent } from './viewer/viewer.component';
 import { UploadComponent } from './upload/upload.component';
 import { EncryptionService } from './encryption.service';
 
@@ -13,7 +13,8 @@ import { EncryptionService } from './encryption.service';
     AppComponent,
     StartComponent,
     ViewerComponent,
-    UploadComponent
+    UploadComponent,
+    SafeHtmlPipe
   ],
   imports: [
     BrowserModule,
