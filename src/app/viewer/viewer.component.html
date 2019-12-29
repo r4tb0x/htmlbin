@@ -15,7 +15,7 @@
     </div>
     <div class="row" *ngIf="fileType === 'document'">
       <div class="col-12">
-        <div class="showDocument" [innerHTML]="documentHTML"></div>
+        <div class="showDocument" [innerHTML]="documentHTML | safeHtml"></div>
       </div>
     </div>
   </div>

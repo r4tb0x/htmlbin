@@ -1,8 +1,16 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Pipe, PipeTransform, SecurityContext } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EncryptionService } from '../encryption.service';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+
+@Pipe({ name: 'safeHtml'})
+export class SafeHtmlPipe implements PipeTransform  {
+  constructor(private sanitized: DomSanitizer) {}
+  transform(value: string): string {
+    return this.sanitized.sanitize(SecurityContext.NONE, value);
+  }
+}
 
 @Component({
   selector: 'app-viewer',
@@ -16,7 +24,7 @@ export class ViewerComponent implements OnInit, OnDestroy {
   password: string = '';
   decryptedText: string = '';
   fileType: string = '';
-  documentHTML: SafeHtml = null;
+  documentHTML: string = null;
   errorMessage: string = null;
   isLoading: boolean = true;
   siteUrl: string = '';
@@ -52,7 +60,7 @@ export class ViewerComponent implements OnInit, OnDestroy {
             try {
               this.decryptedText = this.encryptionService.decrypt(answer.data, this.password);
               if (answer.type === 'html' || answer.type === 'document') {
-                this.documentHTML = this.sanitizer.bypassSecurityTrustHtml(this.decryptedText);
+                this.documentHTML = this.decryptedText;
               }
               this.isLoading = false;
               this.fileType = answer.type;
